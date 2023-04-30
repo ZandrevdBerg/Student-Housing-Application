@@ -63,12 +63,13 @@ function onClose() {
     display: flex;
     flex-direction: column;
     /* background-color: #FFFFFF; */
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.95);
     width: 500px;
     height: 500px;
     margin: auto;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     border-radius: 20px;
+    z-index: 9998;
 
 }
 
