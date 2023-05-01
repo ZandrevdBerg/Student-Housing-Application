@@ -1,6 +1,17 @@
-<script setup>
 
-import { ref } from 'vue';
+<script setup>
+import { computed, ref } from 'vue';
+
+const password = ref('');
+const email = ref('');
+const repeat_password = ref('');
+
+const passwordAuthentication = computed(() => {
+    return password.value === repeat_password.value
+})
+
+
+
 const props = defineProps({
     isVisible: Boolean
 })
@@ -9,6 +20,21 @@ const emits = defineEmits(['close']);
 
 function onClose() {
     emits('close');
+}
+
+function onSubmit() {
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open("POST", "./server/Authentication/form-submit.php", true);
+    xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+
+    xhttp.onreadystatechange = function() {
+        if (xhttp.readyState === XMLHttpRequest.DONE && xhttp.status === 200) {
+          console.log(xhttp.responseText);
+        }
+
+    }
+    xhttp.send(`password=${password.value}&email=${email.value}`);
 }
 
 
@@ -23,10 +49,11 @@ function onClose() {
                 <p>Enter the details below to create an account</p>
             </div>
             <div class="modal-body">
-                <form>
-                    <input type="email" placeholder="Email" required>
-                    <input type="password" placeholder="Password" required>
-                    <input type="password" placeholder="Repeat Password" required>
+                <form @submit.prevent="onSubmit" method="post" action="./server/Authentication/form-submit.php">
+                    <input type="email" placeholder="Email" required name="email" v-model="email">
+                    <input type="password" placeholder="Password" required name="password" v-model="password">
+                    <input type="password" placeholder="Repeat Password" required name="repeat_password" v-model="repeat_password">
+                    <span v-if="!passwordAuthentication" class="error-msg">Password does not match</span>
                     <div class="modal-body-checkbox">
                         <input type="radio" value="student" id="student" name="PersonType">
                         <label for="student">Student</label>
@@ -34,7 +61,7 @@ function onClose() {
                         <label for="landlord">Landlord</label>
                     </div>
                     <div class="form-submit">
-                        <input type="submit" value="Confirm">
+                        <input type="submit" value="Confirm" :disabled="!passwordAuthentication">
                     </div>
                 </form>
             </div>
@@ -165,4 +192,16 @@ input[type="submit"]:hover {
     margin-left: 5px;
     margin-top: 15px;
 }
+
+input[type="submit"]:disabled {
+    background-color: red;
+    pointer-events: none;
+}
+
+.error-msg {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
 </style>
