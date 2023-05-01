@@ -1,6 +1,9 @@
 
 <script setup>
+/* 1 - Create a way for users to only submit once (currently after a user has submitted, the sign up is closed off) */
 import { computed, ref } from 'vue';
+
+const FormSubmitted = ref(false);
 
 const password = ref('');
 const email = ref('');
@@ -24,6 +27,9 @@ function onClose() {
 
 function onSubmit() {
     const xhttp = new XMLHttpRequest();
+    // if(FormSubmitted.value == true){
+    //     return ;
+    // }
 
     xhttp.open("POST", "./server/Authentication/form-submit.php", true);
     xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -31,6 +37,7 @@ function onSubmit() {
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState === XMLHttpRequest.DONE && xhttp.status === 200) {
           console.log(xhttp.responseText);
+        //   FormSubmitted.value = true;
         }
 
     }
