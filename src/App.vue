@@ -22,6 +22,9 @@ import App_Type from "./components/App_Type.vue";
   <div>
     <App_Type></App_Type>
   </div>
+  <div class="btn-map-container">
+    <button class="btn-to-maps">Open Map</button>
+  </div>
 </template>
 
 
@@ -66,5 +69,31 @@ import App_Type from "./components/App_Type.vue";
   font-size: 40px;
   word-wrap: break-word;
 
+}
+
+.btn-map-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+}
+
+.btn-to-maps {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    color: #FFFFFF;
+    background-color: rgba(85, 30, 25, 1);
+    border-radius: 50px;
+    cursor: pointer;
+    border: none;
+    padding: 30px 80px;
+    width: 500px;
+    transition: all 0.3s ease 0s;
+    user-select: none;
+}
+
+.btn-to-maps:hover {
+  background-color: #195055;
 }
 </style>

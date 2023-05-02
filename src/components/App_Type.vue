@@ -1,4 +1,9 @@
 <script setup>
+
+
+//Create a scrolling feature for the whole container for the mid section
+// https://www.youtube.com/watch?v=T33NN_pPeNI
+
 </script>
 
 
@@ -72,6 +77,7 @@
     flex-direction: column;
     cursor: pointer;
     pointer-events: none;
+    user-select: none;
 
 }
 
@@ -109,6 +115,7 @@
     flex-direction: column;
     cursor: pointer;
     pointer-events: none;
+    user-select: none;
 
 }
 
@@ -147,6 +154,7 @@
     flex-direction: column;
     cursor: pointer;
     pointer-events: none;
+    user-select: none;
 
 }
 
