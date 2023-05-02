@@ -2,6 +2,7 @@
 
 import Header from "./components/Header.vue"
 import SearchBarFunction from "./components/SearchBarFunction.vue"
+import App_Type from "./components/App_Type.vue";
 
 </script>
 
@@ -12,10 +13,14 @@ import SearchBarFunction from "./components/SearchBarFunction.vue"
     </Header>
     <div class="searchbar-container">
       <div class="searchbar-text">
-        <h2>Campus Dwelling makes finding shared housing easy. Explore our platform to find housing options tailored to your needs.</h2>
+        <h2>Campus Dwelling makes finding shared housing easy. Explore our platform to find housing options tailored to
+          your needs.</h2>
       </div>
       <SearchBarFunction></SearchBarFunction>
     </div>
+  </div>
+  <div>
+    <App_Type></App_Type>
   </div>
 </template>
 
@@ -56,11 +61,10 @@ import SearchBarFunction from "./components/SearchBarFunction.vue"
   margin-bottom: 40px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-weight: 1000;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
   text-align: center;
   font-size: 40px;
   word-wrap: break-word;
 
 }
-
 </style>
