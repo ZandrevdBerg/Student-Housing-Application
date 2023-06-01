@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="info-3">
-            <img src="../assets/Apartment Search.jpg">
+            <img src="../assets/ApartmentSearch.jpg">
             <div class="info-3-text">
                 <h2>Find Your Apartment</h2>
                 <p>Discover your perfect home away from home with Campus Dwelling. Our platform offers a wide range of

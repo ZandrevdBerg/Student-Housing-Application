@@ -8,23 +8,7 @@ import App_Type from "./components/App_Type.vue";
 
 
 <template>
-  <div class="image-container">
-    <Header>
-    </Header>
-    <div class="searchbar-container">
-      <div class="searchbar-text">
-        <h2>Campus Dwelling makes finding shared housing easy. Explore our platform to find housing options tailored to
-          your needs.</h2>
-      </div>
-      <SearchBarFunction></SearchBarFunction>
-    </div>
-  </div>
-  <div>
-    <App_Type></App_Type>
-  </div>
-  <div class="btn-map-container">
-    <button class="btn-to-maps">Open Map</button>
-  </div>
+  <RouterView></RouterView>
 </template>
 
 

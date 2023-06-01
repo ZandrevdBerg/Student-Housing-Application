@@ -1,9 +1,11 @@
 <script setup>
 
 import { ref } from 'vue';
-import SignUpModal from "./SignUp_Modal.vue"
+import SignUpModal from "./SignUp_Modal.vue";
+import LoginModal from "./Login_Modal.vue";
 
 const isSignUpModalVisible = ref(false)
+const isLoginModalVisible = ref(false);
 
 
 </script>
@@ -13,11 +15,12 @@ const isSignUpModalVisible = ref(false)
     <div class="header-container">
         <img class="logo-img" src="../assets/CampusDwellingBrown.png" alt="Logo" draggable="false">
         <div class="header-buttons">
-            <button class="login_button">Login</button>
+            <button class="login_button" @click="isLoginModalVisible = true">Login</button>
             <button class="signup_button" @click="isSignUpModalVisible = true">Sign Up</button>
         </div>
     </div>
     <SignUpModal :isVisible = isSignUpModalVisible @close="isSignUpModalVisible = false"></SignUpModal>
+    <LoginModal :isVisible="isLoginModalVisible" @close="isLoginModalVisible = false"></LoginModal>
 </template>
 
 

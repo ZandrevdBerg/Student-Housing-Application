@@ -1,90 +1,71 @@
-
 <script setup>
-/* 1 - Create a way for users to only submit once (currently after a user has submitted, the sign up is closed off) */
-/* 2 - Check if the email exists in the userdatabase */
-import { computed, ref } from 'vue';
-
-
+import { ref } from "vue";
 const password = ref('');
 const email = ref('');
-const repeat_password = ref('');
-const personType = ref('');
 
-var signed_up = ref(false);
+const LoginFlag = ref(false);
 
-const passwordAuthentication = computed(() => {
-    return password.value === repeat_password.value
-})
-
+const valid_password = ref(true);
+const existence_failed = ref(false);
 
 
 const props = defineProps({
-    isVisible: Boolean
+    isVisible: Boolean,
 })
 
 const emits = defineEmits(['close']);
 
+
+
+
 function onClose() {
     emits('close');
-    signed_up.value = false;
+    valid_password.value = true;
+
 }
 
 
-
-function onSubmit() {
+function onLogin() {
     const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "./server/Authentication/form-submit.php", true);
+    xhttp.open("POST", "./server/Authentication/CheckUserExistence.php", true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === XMLHttpRequest.DONE && xhttp.status === 200) {
-            // console.log(xhttp.responseText);
+            console.log(xhttp.responseText);
             const response = JSON.parse(xhttp.responseText);
-            const sessionID = response.session_id;
-            // signed_up = response.signed_up;
-            signed_up.value = response.user_exist;
-            // alert(sessionID);
-            // alert(document.cookie);
-            // cookieValue = document.cookie
+            LoginFlag.value = response.login_flag;
+            valid_password.value = response.valid;
+            existence_failed.value = response.existence_failed;
 
         }
 
     }
-    xhttp.send(`password=${password.value}&email=${email.value}&persontype=${personType.value}`);
+    xhttp.send(`password=${password.value}&email=${email.value}`);
 }
 
-</script>
 
+</script>
 
 <template>
     <div v-if="isVisible" class="modal-mask">
         <div class="modal-container">
             <div class="modal-header">
-                <h1>Create an account</h1>
-                <p>Enter the details below to create an account</p>
+                <h1>Welcome back!</h1>
+                <p>Please Provide your login details below</p>
             </div>
             <div class="modal-body">
-                <form @submit.prevent="onSubmit" method="post" action="./server/Authentication/form-submit.php">
-                    <span v-if="signed_up == true" class="error-msg">Existing User. Try Logging in</span>
-
-                    <input type="email" placeholder="Email" required name="email" v-model="email" >
+                <form @submit.prevent="onLogin" method="post" action="./server/Authentication/CheckUserExistence.php">
+                    <span v-if="valid_password == false" class="error-msg">Password is incorrect</span>
+                    <span v-if="existence_failed == true" class="error-msg">User does not exist, go to Sign-Up</span>
+                    <input type="email" placeholder="Email" required name="email" v-model="email">
                     <input type="password" placeholder="Password" required name="password" v-model="password">
-                    <input type="password" placeholder="Repeat Password" required name="repeat_password"
-                        v-model="repeat_password">
-                        <!-- <span v-if="signed_up == true" class="error-msg">User Already exists in the database</span> -->
-                    <span v-if="!passwordAuthentication" class="error-msg">Password does not match</span>
-                    <div class="modal-body-checkbox">
-                        <input type="radio" value="student" id="student" name="personType" v-model="personType">
-                        <label for="student">Student</label>
-                        <input type="radio" value="landlord" id="landlord" name="personType" v-model="personType">
-                        <label for="landlord">Landlord</label>
-                    </div>
                     <div class="form-submit">
-                        <input type="submit" value="Confirm" :disabled="!passwordAuthentication || signed_up == true">
+                        <input type="submit" value="Continue">
                     </div>
                 </form>
             </div>
             <div>
-                <button @click="onClose" class="closeButton"></button>
+                <button @click="onClose" class="closeButton" :disabled="valid_password == false"></button>
             </div>
         </div>
     </div>
@@ -184,7 +165,6 @@ input[type='password'] {
     cursor: pointer;
 }
 
-
 input[type="submit"] {
     transition: all 0.3s ease 0s;
     cursor: pointer;
@@ -194,31 +174,10 @@ input[type="submit"]:hover {
     background-color: #195055;
 }
 
-.modal-body-checkbox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.modal-body-checkbox input[type=checkbox],
-.modal-body-checkbox label {
-    display: inline-block;
-    vertical-align: middle;
-    justify-content: center;
-    margin-right: 10px;
-    margin-left: 5px;
-    margin-top: 15px;
-}
-
-input[type="submit"]:disabled {
-    background-color: red;
-    pointer-events: none;
-}
-
 .error-msg {
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
+    color: red;  
 }
 </style>
