@@ -3,11 +3,18 @@
 import Header from "./Header.vue"
 import SearchBarFunction from "./SearchBarFunction.vue"
 import App_Type from "./App_Type.vue";
+import {ref} from 'vue'
+
+const LoginFlagHome = ref(false)
+function LoginFunctionCheck(flag)
+{
+    LoginFlagHome.value = flag
+}
 
 </script>
 <template>
         <div class="image-container">
-            <Header>
+            <Header @userLogged="LoginFunctionCheck">
             </Header>
             <div class="searchbar-container">
                 <div class="searchbar-text">
@@ -68,7 +75,6 @@ import App_Type from "./App_Type.vue";
     text-align: center;
     font-size: 40px;
     word-wrap: break-word;
-
 }
 
 .btn-map-container {

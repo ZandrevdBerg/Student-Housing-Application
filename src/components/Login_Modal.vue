@@ -8,14 +8,27 @@ const LoginFlag = ref(false);
 const valid_password = ref(true);
 const existence_failed = ref(false);
 
+import { userLoginState } from "./Store";
+
+const LoginState = userLoginState()
+const loggedIn = LoginState.loggedIn;
+
 
 const props = defineProps({
     isVisible: Boolean,
 })
 
-const emits = defineEmits(['close']);
+const emits = defineEmits(['close','LoggedIn_Flag']);
 
-
+function LoginCheckFunction(flag,mail)
+{
+    if(flag == true)
+    {
+        emits("LoggedIn_Flag",email.value);
+        LoginState.logIn();
+        LoginState.email = mail
+    }
+}
 
 
 function onClose() {
@@ -36,6 +49,9 @@ function onLogin() {
             LoginFlag.value = response.login_flag;
             valid_password.value = response.valid;
             existence_failed.value = response.existence_failed;
+            LoginCheckFunction(LoginFlag.value,email.value)
+            // emits('emitEmail',email.value)
+
 
         }
 
@@ -81,6 +97,7 @@ function onLogin() {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
 
 }
 
