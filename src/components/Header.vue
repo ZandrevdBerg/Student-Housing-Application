@@ -5,6 +5,8 @@ import SignUpModal from "./SignUp_Modal.vue";
 import LoginModal from "./Login_Modal.vue";
 import { userLoginState } from './Store';
 
+import LoggedInModal from './LoggedInModal.vue'
+
 
 const isSignUpModalVisible = ref(false)
 const isLoginModalVisible = ref(false);
@@ -35,6 +37,14 @@ TODO:
 
 */
 
+/*
+TODO:
+
+1. Fix Buttons after user Logs in
+
+
+*/
+
 
 
 const emits = defineEmits(['userLogged'])
@@ -43,6 +53,7 @@ function onUserLogin(x) {
     LoggedInEmail.value = x;
     LoginState.email = LoggedInEmail.value
     console.log(LoginState.email)
+    console.log(LoginState.type)
     UserLoggedIn.value = true;
     LoginState.loggedIn = UserLoggedIn.value
     emits('userLogged',UserLoggedIn.value)
@@ -62,18 +73,8 @@ function ToggleMenu() {
             <button class="login_button" @click="isLoginModalVisible = true">Login</button>
             <button class="signup_button" @click="isSignUpModalVisible = true">Sign Up</button>
         </div>
-        <div class="header-account-buttons" v-if="userLoggedIn==true">
-            <button class="account-button" @click="ToggleMenu"></button>
-            <div class="dropdown-container">
-                <ul v-if="toggleDropDown">
-                    <li>Account</li>
-                    <div class="dropdown-mid">
-                        <li>Create a Listing</li>
-                        <li>Inbox</li>
-                    </div>
-                    <li><button class="logout-button" @click="LoginState.loggedIn=false">Logout</button></li>
-                </ul>
-            </div>
+        <div v-if="userLoggedIn==true">
+            <LoggedInModal :isVisible="LoginState.loggedIn == true"></LoggedInModal>
         </div>
     </div>
     <SignUpModal :isVisible=isSignUpModalVisible @close="isSignUpModalVisible = false"></SignUpModal>

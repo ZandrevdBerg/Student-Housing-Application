@@ -6,13 +6,15 @@ import { createPinia } from 'pinia'
 
 
 import MapsView from './components/MapsView.vue'
+import CreateListing from './components/CreateListing.vue'
 // import './assets/main.css'
 
 const pinia = createPinia()
 
 const routes = [
     { path: "/Maps", component : MapsView},
-    { path: "/", component : Home}
+    { path: "/", component : Home},
+    {path: "/Create-Listing", component : CreateListing}
 ]
 
 const router = createRouter({

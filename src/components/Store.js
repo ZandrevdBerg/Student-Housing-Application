@@ -4,7 +4,8 @@ export const userLoginState = defineStore('LoginState',{
     state: () => ({
         loggedIn: false,
         email: "",
-        sessionID: ""
+        sessionID: "",
+        type: ""
     }),
     actions: {
         logIn() {

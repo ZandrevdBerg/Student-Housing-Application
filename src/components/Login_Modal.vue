@@ -4,6 +4,7 @@ const password = ref('');
 const email = ref('');
 
 const LoginFlag = ref(false);
+const responseType = ref("")
 
 const valid_password = ref(true);
 const existence_failed = ref(false);
@@ -20,13 +21,14 @@ const props = defineProps({
 
 const emits = defineEmits(['close','LoggedIn_Flag']);
 
-function LoginCheckFunction(flag,mail)
+function LoginCheckFunction(flag,mail,rType)
 {
     if(flag == true)
     {
         emits("LoggedIn_Flag",email.value);
         LoginState.logIn();
         LoginState.email = mail
+        LoginState.type = rType
     }
 }
 
@@ -47,9 +49,10 @@ function onLogin() {
             console.log(xhttp.responseText);
             const response = JSON.parse(xhttp.responseText);
             LoginFlag.value = response.login_flag;
+            responseType.value = response.type
             valid_password.value = response.valid;
             existence_failed.value = response.existence_failed;
-            LoginCheckFunction(LoginFlag.value,email.value)
+            LoginCheckFunction(LoginFlag.value,email.value,responseType.value)
             // emits('emitEmail',email.value)
 
 
@@ -58,6 +61,7 @@ function onLogin() {
     }
     xhttp.send(`password=${password.value}&email=${email.value}`);
 }
+
 
 
 </script>
